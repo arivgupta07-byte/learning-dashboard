@@ -9,10 +9,13 @@ export default async function Home() {
   const { data: courses, error } = await supabase
     .from("courses")
     .select("id,title,progress,icon_name");
-  // console.log(courses);
-  // console.log(error);
+ 
   if (error) {
-    return <div>Failed to load courses</div>;
+    return (
+      <main className="min-h-screen bg-black text-white flex items-center justify-center">
+        Failed to load courses
+      </main>
+    );
   }
 
   return (
@@ -27,14 +30,14 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             {courses?.map((course, index) => (
-              
-                <CourseCard
-                  key={course.id}
-                  title={course.title}
-                  progress={course.progress}
-                  icon_name={course.icon_name}
-                />
-              
+
+              <CourseCard
+                key={course.id}
+                title={course.title}
+                progress={course.progress}
+                icon_name={course.icon_name}
+              />
+
             ))}
           </div>
 
