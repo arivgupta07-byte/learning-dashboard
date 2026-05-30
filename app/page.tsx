@@ -2,10 +2,16 @@ import Sidebar from '../components/Sidebar'
 import HeroTile from "../components/HeroTile";
 import CourseCard from "../components/CourseCard";
 import ActivityTile from "../components/ActivityTile";
+import { supabase } from "@/lib/supabase";
 
 
+export default async function Home() {
+const { data: courses, error } = await supabase
+  .from("courses")
+  .select("*");
+// console.log(courses);
+// console.log(error);
 
-export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="flex">
@@ -16,16 +22,14 @@ export default function Home() {
         <section className="flex-1 p-6">
           <HeroTile />
 
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <CourseCard
-              title="React Mastery"
-              progress={75}
-            />
-
-            <CourseCard
-              title="Next.js"
-              progress={40}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            {courses?.map((course) => (
+              <CourseCard
+                key={course.title}
+                title={course.title}
+                progress={course.progress}
+              />
+            ))}
           </div>
 
           <div className="mt-4">

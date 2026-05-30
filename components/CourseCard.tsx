@@ -10,6 +10,13 @@ export default function CourseCard({
   return (
     <div className="rounded-2xl bg-zinc-900 p-6">
       <h3 className="font-semibold">{title}</h3>
+      <div className="mt-3 h-2 bg-zinc-800 rounded-full">
+        <div
+          className="h-2 bg-green-500 rounded-full"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
 
       <p className="mt-2 text-zinc-400">
         Progress: {progress}%
