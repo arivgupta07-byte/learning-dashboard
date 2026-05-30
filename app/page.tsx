@@ -6,16 +6,19 @@ import { supabase } from "@/lib/supabase";
 
 
 export default async function Home() {
-const { data: courses, error } = await supabase
-  .from("courses")
-  .select("*");
-// console.log(courses);
-// console.log(error);
+  const { data: courses, error } = await supabase
+    .from("courses")
+    .select("id,title,progress,icon_name");
+  // console.log(courses);
+  // console.log(error);
+  if (error) {
+    return <div>Failed to load courses</div>;
+  }
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <div className="flex">
-        <aside className="w-64 border-r border-zinc-800 p-6">
+      <div className="flex flex-col md:flex-row">
+        <aside className="w-full md:w-64 border-r border-zinc-800 p-6">
           <Sidebar />
         </aside>
 
@@ -23,12 +26,15 @@ const { data: courses, error } = await supabase
           <HeroTile />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            {courses?.map((course) => (
-              <CourseCard
-                key={course.title}
-                title={course.title}
-                progress={course.progress}
-              />
+            {courses?.map((course, index) => (
+              
+                <CourseCard
+                  key={course.id}
+                  title={course.title}
+                  progress={course.progress}
+                  icon_name={course.icon_name}
+                />
+              
             ))}
           </div>
 
